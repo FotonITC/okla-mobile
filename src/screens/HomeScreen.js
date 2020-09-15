@@ -1,17 +1,38 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, FlatList} from 'react-native';
 import {connect} from 'react-redux';
+import {fetchDishes} from '../store/actions/dishes';
 
-function HomeScreen({navigation}) {
-    return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Home Screen</Text>
-            <Button
-                title="Go to Details"
-                onPress={() => navigation.navigate('Details')}
-            />
-        </View>
-    );
+class HomeScreen extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        this.props.fetchDishes();
+    }
+
+    render() {
+        const {navigation, dishes} = this.props;
+
+        return (
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text>Home Screen</Text>
+
+                <FlatList
+                    data={dishes}
+                    keyExtractor={item => item.id}
+                    renderItem={({item}) => <Text>{item.label}</Text>}
+                />
+
+                <Button
+                    title="Go to Details"
+                    onPress={() => navigation.navigate('Details')}
+                />
+            </View>
+        );
+    }
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,4 +41,4 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-export default connect(mapStateToProps, null)(HomeScreen);
+export default connect(mapStateToProps, {fetchDishes})(HomeScreen);
