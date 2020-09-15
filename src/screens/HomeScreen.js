@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Button, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import {fetchDishes} from '../store/actions/dishes';
+import DishItem from '../components/DishItem';
 
 class HomeScreen extends React.Component {
 
@@ -17,20 +18,16 @@ class HomeScreen extends React.Component {
         const {navigation, dishes} = this.props;
 
         return (
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text>Home Screen</Text>
-
-                <FlatList
-                    data={dishes}
-                    keyExtractor={item => item.id}
-                    renderItem={({item}) => <Text>{item.label}</Text>}
-                />
-
-                <Button
-                    title="Go to Details"
-                    onPress={() => navigation.navigate('Details')}
-                />
-            </View>
+            <FlatList
+                data={dishes}
+                keyExtractor={item => item.id.toString()}
+                renderItem={({item}) => <DishItem
+                    title={item.label}
+                    description={item.description}
+                    image={item.images[0]}
+                    onSelect={() => navigation.navigate('Details')}
+                />}
+            />
         );
     }
 }
