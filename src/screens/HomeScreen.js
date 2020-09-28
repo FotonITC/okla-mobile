@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, View, TextInput, StyleSheet, Button} from 'react-native';
+import {FlatList, View, TextInput, StyleSheet, Button, TouchableOpacity, Text} from 'react-native';
 import {createStructuredSelector} from 'reselect';
 import {connect} from 'react-redux';
 import {fetchDishes, initSelectedDish, refreshDishes, updateProp} from '../store/actions/dishes';
@@ -14,7 +14,18 @@ class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchDishes();
+        const {fetchDishes, navigation} = this.props;
+        fetchDishes();
+        navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity
+                    style={{padding: 10, marginRight: 10}}
+                    onPress={() => navigation.navigate('Create')}
+                >
+                    <Text style={{color: '#007AFF'}}>Add</Text>
+                </TouchableOpacity>
+            ),
+        });
     }
 
     render() {

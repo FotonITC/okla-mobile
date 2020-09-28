@@ -9,6 +9,7 @@ import dishesReducer from './src/store/reducers/dishes';
 
 import DetailsScreen from './src/screens/DetailsScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import CreateScreen from './src/screens/CreateScreen';
 
 const rootReducer = combineReducers({
     dishes: dishesReducer,
@@ -25,6 +26,7 @@ function App() {
                 <Stack.Navigator initialRouteName="Home">
                     <Stack.Screen name="Home" component={HomeScreen}/>
                     <Stack.Screen name="Details" component={DetailsScreen}/>
+                    <Stack.Screen name="Create" component={CreateScreen}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </Provider>
