@@ -6,7 +6,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     async (config) => {
-        config.headers.Authorization = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYWhlci5iZW5AZm90b24taXQuY29tIiwiaWF0IjoxNjAxMTI4ODI3LCJleHAiOjE2MDEyMTUyMjd9.ziyLaJ-5q9M1R0QWB34xdMYe1OITrcqQ7F1AsI69KezOi2nR8nlr-9EI1XPutYO7o0Smc8WKVLqr-bfKY_XU3w';
+        config.headers.Authorization = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjAyNDMzODcwLCJleHAiOjE2MDI1MjAyNzB9.yueQbnW_QPSJyn9ymp8r8sA-Hhu19t8wLABisMYRCnnJLC6hp_YWoeBnThLXP-dG6FAEYNafLnO_Qa0MErvujg';
         return config;
     }, (err) => {
         return Promise.reject(err);

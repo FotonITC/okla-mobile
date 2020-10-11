@@ -4,6 +4,7 @@ import {createStructuredSelector} from 'reselect';
 import {connect} from 'react-redux';
 import {fetchDishes, initSelectedDish, refreshDishes, updateProp} from '../store/actions/dishes';
 import DishItem from '../components/DishItem';
+import i18n from '../services/i18n';
 
 import {selectDishes, selectPage, selectLoading, selectSearch} from '../store/actions/dish.selectors';
 
@@ -16,16 +17,18 @@ class HomeScreen extends React.Component {
     componentDidMount() {
         const {fetchDishes, navigation} = this.props;
         fetchDishes();
+
         navigation.setOptions({
             headerRight: () => (
                 <TouchableOpacity
                     style={{padding: 10, marginRight: 10}}
                     onPress={() => navigation.navigate('Create')}
                 >
-                    <Text style={{color: '#007AFF'}}>Add</Text>
+                    <Text style={{color: '#007AFF'}}>{i18n.t('add')}</Text>
                 </TouchableOpacity>
             ),
         });
+
     }
 
     render() {
@@ -40,7 +43,7 @@ class HomeScreen extends React.Component {
                         value={search}
                     />
                     <Button
-                        title="Search"
+                        title={i18n.t('search')}
                         onPress={() => this.props.refreshDishes(search)}
                     />
                 </View>
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     searchInputContainer: {
         marginVertical: 10,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: 'center',
     },
     searchInput: {
