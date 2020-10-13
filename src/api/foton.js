@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const instance = axios.create({
     baseURL: 'http://foton-it.com:8090/api',
@@ -6,7 +7,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     async (config) => {
-        config.headers.Authorization = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNjAyNDMzODcwLCJleHAiOjE2MDI1MjAyNzB9.yueQbnW_QPSJyn9ymp8r8sA-Hhu19t8wLABisMYRCnnJLC6hp_YWoeBnThLXP-dG6FAEYNafLnO_Qa0MErvujg';
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     }, (err) => {
         return Promise.reject(err);
