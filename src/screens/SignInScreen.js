@@ -1,47 +1,47 @@
 import React from 'react';
-import {View, StyleSheet, Button, TextInput} from 'react-native';
+import {View, StyleSheet, Button, TextInput, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 import {signIn, updateProp} from '../store/actions/auth';
 
-class SignInScreen extends React.Component {
+const SignInScreen = (props) => {
 
-    constructor(props) {
-        super(props);
-    }
+    const {signIn, email, password, updateProp, loading} = props;
 
-    render() {
+    const handleSignIn = () => {
+        //TODO validation
 
-        const {email, password, updateProp, signIn} = this.props;
-
-        return (
-            <View style={styles.screen}>
-                <View style={styles.action}>
-                    <TextInput
-                        placeholder="Your Email"
-                        style={styles.textInput}
-                        autoCapitalize="none"
-                        value={email}
-                        onChangeText={value => updateProp({prop: 'email', value})}
-                    />
-                </View>
-
-                <View style={styles.action}>
-                    <TextInput
-                        placeholder="Your Password"
-                        style={styles.textInput}
-                        autoCapitalize="none"
-                        secureTextEntry
-                        value={password}
-                        onChangeText={value => updateProp({prop: 'password', value})}
-                    />
-                </View>
-
-                <Button title="Sign In" onPress={() => signIn(email, password)}/>
-
-            </View>
-        );
+        updateProp({prop: 'loading', value: true});
+        signIn(email, password);
     };
-}
+
+    return (
+        <View style={styles.screen}>
+            <View style={styles.action}>
+                <TextInput
+                    placeholder="Your Email"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    value={email}
+                    onChangeText={value => updateProp({prop: 'email', value})}
+                />
+            </View>
+
+            <View style={styles.action}>
+                <TextInput
+                    placeholder="Your Password"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    secureTextEntry
+                    value={password}
+                    onChangeText={value => updateProp({prop: 'password', value})}
+                />
+            </View>
+
+            {loading ? <ActivityIndicator size="small"/> : <Button title="Sign In" onPress={handleSignIn}/>}
+
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     screen: {
@@ -65,12 +65,9 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     const {email, password, loading} = state.auth;
-    console.log(state.auth);
-    return {
-        email, password, loading,
-    };
+    return {email, password, loading};
 };
 
 export default connect(mapStateToProps, {signIn, updateProp})(SignInScreen);

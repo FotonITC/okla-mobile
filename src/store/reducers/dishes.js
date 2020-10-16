@@ -30,6 +30,7 @@ export default (state = initialState, action) => {
             return {...state, plats: []};
         case UPDATE_PROP:
             return {...state, [action.payload.prop]: action.payload.value};
+        default:
+            return state;
     }
-    return state;
 };

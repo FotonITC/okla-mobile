@@ -1,11 +1,10 @@
 import dishesApi from '../../api/foton';
 import AsyncStorage from '@react-native-community/async-storage';
-import {navigate} from '../../navigationRef';
 
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 export const SIGN_UP = 'SIGN_UP';
-export const UPDATE_PROP = 'UPDATE_PROP';
+export const UPDATE_AUTH_PROP = 'UPDATE_AUTH_PROP';
 
 export const signIn = (email, password) => {
     return async dispatch => {
@@ -16,8 +15,18 @@ export const signIn = (email, password) => {
             });
             const {jwt} = response.data;
             await AsyncStorage.setItem('token', jwt);
-            dispatch({type: SIGN_IN, payload: jwt});
-            navigate('Home');
+            dispatch({type: SIGN_IN, payload: {token: jwt}});
+        } catch (e) {
+            console.log(e);
+        }
+    };
+};
+
+export const signOut = () => {
+    return async dispatch => {
+        try {
+            await AsyncStorage.removeItem('token');
+            dispatch({type: SIGN_OUT});
         } catch (e) {
             console.log(e);
         }
@@ -27,7 +36,7 @@ export const signIn = (email, password) => {
 
 export const updateProp = ({prop, value}) => {
     return {
-        type: UPDATE_PROP,
+        type: UPDATE_AUTH_PROP,
         payload: {prop, value},
     };
 };
