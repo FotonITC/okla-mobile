@@ -9,7 +9,8 @@ import {navigationRef} from '../navigationRef';
 const RootNavigation = (props) => {
     return (
         <NavigationContainer ref={navigationRef}>
-            {props.token !== null ? <MainTabScreen/> : <AuthStackScreen/>}
+           {/* {props.token !== null ? <MainTabScreen/> : <AuthStackScreen/>}*/}
+           <MainTabScreen/>
         </NavigationContainer>
     );
 };

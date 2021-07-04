@@ -22,6 +22,7 @@ const SignInScreen = (props) => {
                     style={styles.textInput}
                     autoCapitalize="none"
                     value={email}
+                    autoCorrect={false}
                     onChangeText={value => updateProp({prop: 'email', value})}
                 />
             </View>

@@ -1,15 +1,17 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
-import {connect} from 'react-redux';
-import {signOut} from '../store/actions/auth';
+import {View} from 'react-native';
+import SignInScreen from "./SignInScreen";
+import {useSelector} from 'react-redux';
+import ProfileScreen from "./ProfileScreen";
 
-const SettingsScreen = (props) => {
+const SettingsScreen = () => {
+    const {token} = useSelector(selector => selector.auth);
+
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Settings Screen</Text>
-            <Button title="Sign Out" onPress={props.signOut}/>
+        <View style={{flex: 1}}>
+            {token ? <ProfileScreen/> : <SignInScreen/>}
         </View>
     );
 };
 
-export default connect(null, {signOut})(SettingsScreen);
+export default SettingsScreen;
